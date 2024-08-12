@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: test-
+spec:
+  entrypoint: pipeline
+  templates:
+    # Templates
+    - name: build-template
+      container:
+        image: alpine
+        command: [ sh, -c ]
+        args: [ "echo 'running build' | tee /tmp/build_result.txt" ]
+      outputs:
+        artifacts:
+          - name: build-output
+            path: /tmp/build_result.txt
+    - name: publish-template
+      inputs:
+        artifacts:
+          - name: build-input
+            path: /tmp/build_result.txt
+      container:
+        image: alpine
+        command: [ sh, -c ]
+        args: [ "cat /tmp/build_result.txt" ]
+
+    # Pipeline Steps
+    - name: pipeline
+      steps:
+        - - name: build
+            template: build-template
+        - - name: publish
+            template: publish-template
+            arguments:
+              artifacts:
+                - name: build-input
+                  from: "{{steps.build.outputs.artifacts.build-output}}"

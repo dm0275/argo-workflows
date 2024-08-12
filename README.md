@@ -1,1 +1,1 @@
-# argo-workflows
+# Argo Workflows

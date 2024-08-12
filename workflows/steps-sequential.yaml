@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: test-
+spec:
+  entrypoint: pipeline
+  templates:
+    - name: pipeline
+      steps:
+        - - name: step1
+            templateRef:
+              name: exec-template
+              template: exec
+            arguments:
+              parameters:
+                - name: command
+                  value: "date"
+        - - name: step2
+            templateRef:
+              name: exec-template
+              template: exec
+            arguments:
+              parameters:
+                - name: command
+                  value: "pwd"
+        - - name: step3
+            templateRef:
+              name: exec-template
+              template: exec
+            arguments:
+              parameters:
+                - name: command
+                  value: "ls"

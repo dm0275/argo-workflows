@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: exec-template
+spec:
+  entrypoint: exec
+  templates:
+    - name: exec
+      inputs:
+        parameters:
+          - name: command
+      container:
+        image: alpine
+        command:
+          - sh
+          - -c
+          - "{{inputs.parameters.command}}"
