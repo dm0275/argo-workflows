@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: gradle-build-template
+spec:
+  entrypoint: gradle-build
+  templates:
+    - name: gradle-build
+      inputs:
+        parameters:
+          - name: gradle-opts
+            value: ""
+      container:
+        image: alpine
+        command:
+          - sh
+          - c
+        args:
+          -  "./gradlew build {{inputs.parameters.gradle-opts}}"
