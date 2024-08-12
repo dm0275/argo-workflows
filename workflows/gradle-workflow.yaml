@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: gradle-
+spec:
+  entrypoint: pipeline
+  templates:
+    - name: pipeline
+      steps:
+        - - name: build
+            templateRef:
+              name: gradle-build-template
+              template: gradle-build
+            arguments:
+              parameters:
+                - name: gradle-opts
+                  value: "--info"

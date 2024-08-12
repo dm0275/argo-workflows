@@ -14,6 +14,6 @@ spec:
         image: alpine
         command:
           - sh
-          - c
         args:
-          -  "./gradlew build {{inputs.parameters.gradle-opts}}"
+          - -c
+          -  "echo ./gradlew build {{inputs.parameters.gradle-opts}}"
