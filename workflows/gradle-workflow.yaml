@@ -9,9 +9,21 @@ spec:
       steps:
         - - name: build
             templateRef:
-              name: gradle-build-template
-              template: gradle-build
+              name: gradle-task-template
+              template: gradle-task
             arguments:
               parameters:
+                - name: task-name
+                  value: "build"
+                - name: gradle-opts
+                  value: "--info"
+        - - name: test
+            templateRef:
+              name: gradle-task-template
+              template: gradle-task
+            arguments:
+              parameters:
+                - name: task-name
+                  value: "test"
                 - name: gradle-opts
                   value: "--info"

@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: gradle-task-template
+spec:
+  entrypoint: gradle-task
+  templates:
+    - name: gradle-task
+      inputs:
+        parameters:
+          - name: task-name
+            value: ""
+          - name: gradle-opts
+            value: ""
+      container:
+        image: alpine
+        command:
+          - sh
+        args:
+          - -c
+          -  "echo ./gradlew {{inputs.parameters.task-name}} {{inputs.parameters.gradle-opts}}"
